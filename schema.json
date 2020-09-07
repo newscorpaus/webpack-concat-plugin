@@ -11,6 +11,9 @@
         "sourceMap": {
             "type": "boolean"
         },
+        "transformSourcePath": {
+            "instanceof": "Function"
+        },
         "useHash": {
             "type": "boolean"
         },

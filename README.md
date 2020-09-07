@@ -6,6 +6,9 @@
 
 > A plugin to help webpack concat js and inject into html
 
+## Forked to add new option
+Added option to pass a transform function to modify source paths in sourcemap.
+
 ### Why
 
 Webpack is really powerful. However, when I want to concat the static files and inject into html without webpack JSONP code wrapper, it seems impossible to do that without other tool's help.
@@ -41,6 +44,9 @@ new ConcatPlugin({
     filesToConcat: ['jquery', './src/lib/**', './dep/dep.js', ['./some/**', '!./some/excludes/**']],
     attributes: {
         async: true
+    },
+    transformSourcePath: function(sourcePath) {
+        return sourcePath.replace('/classic/', '/assets/');
     }
 });
 
@@ -66,6 +72,10 @@ if set to false, will use relativePath.
 
 #### outputPath [string]
 if set, will be used as the output directory of the file.
+
+#### transformSourcePath [function(sourcePath)]
+function to transform sourcePaths in sourcemap.
+if function is set, will call function with sourcePath as argument and expects a transformed sourcePath as return.
 
 #### fileName [string] default: [name].js
 if set, will be used as the output fileName
