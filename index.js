@@ -158,8 +158,13 @@ class ConcatPlugin {
                                     reject(err);
                                 }
                                 else {
+                                    // this is a hack to make webpack concat plugin transform sourcemap paths to concat files
+                                    var sourcePath = 'webpack:///' + upath.relative(compiler.options.context, filePath);
+                                    if(typeof self.settings.transformSourcePath === 'function') {
+                                        sourcePath = self.settings.transformSourcePath(sourcePath);
+                                    }
                                     resolve({
-                                        ['webpack:///' + upath.relative(compiler.options.context, filePath)]: data.toString()
+                                        [sourcePath]: data.toString()
                                     });
                                 }
                             });
